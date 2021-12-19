@@ -1,0 +1,8 @@
+public_key_path : ~/.ssh/id_ed25519.pub
+docker_username : jeks0n
+docker_password : "{{ vault_docker_password }}"
+db_host         : "postgres-cluster-project3-do-user-7446382-0.b.db.ondigitalocean.com"
+db_port         : "25060"
+db_database     : defaultdb
+db_username     : doadmin
+db_password     : "{{ vault_db_password }}"

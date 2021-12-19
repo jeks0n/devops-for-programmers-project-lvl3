@@ -1,0 +1,9 @@
+collections:
+  - community.digitalocean
+  - community.general
+  - community.docker
+  - ansible.posix
+
+roles:
+  - geerlingguy.pip
+  - geerlingguy.docker

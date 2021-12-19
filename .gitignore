@@ -60,5 +60,7 @@ profile*
 .env
 *.sqlite
 
+vault-password
+
 .terraform
 terraform.tfstate*

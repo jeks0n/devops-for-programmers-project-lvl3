@@ -2,6 +2,21 @@ data "digitalocean_ssh_key" "my_ssh" {
   name = var.ssh_name
 }
 
+resource "digitalocean_droplet" "web" {
+  count    = 2
+  image    = var.droplet_image
+  name     = "hexlet-devops-project-web-${count.index + 1}"
+  region   = var.region
+  size     = var.droplet_size
+  ssh_keys = [data.digitalocean_ssh_key.my_ssh.id]
+}
+
+resource "digitalocean_certificate" "cert" {
+  name    = "le-terraform-example"
+  type    = "lets_encrypt"
+  domains = [var.domain]
+}
+
 resource "digitalocean_loadbalancer" "public" {
   name   = "hexlet-devops-project-lb"
   region = var.region
@@ -15,7 +30,6 @@ resource "digitalocean_loadbalancer" "public" {
 
     certificate_name = digitalocean_certificate.cert.name
   }
-
 
   forwarding_rule {
     entry_port     = 80
@@ -34,28 +48,9 @@ resource "digitalocean_loadbalancer" "public" {
   droplet_ids = digitalocean_droplet.web.*.id
 }
 
-resource "digitalocean_certificate" "cert" {
-  name    = "project-cert"
-  type    = "lets_encrypt"
-  domains = [var.domain]
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
 resource "digitalocean_domain" "default" {
   name       = var.domain
   ip_address = digitalocean_loadbalancer.public.ip
-}
-
-resource "digitalocean_droplet" "web" {
-  count    = 2
-  image    = var.droplet_image
-  name     = "hexlet-devops-project-web-${count.index + 1}"
-  region   = var.region
-  size     = var.droplet_size
-  ssh_keys = [data.digitalocean_ssh_key.my_ssh.id]
 }
 
 resource "digitalocean_database_cluster" "db" {
@@ -65,4 +60,16 @@ resource "digitalocean_database_cluster" "db" {
   size       = var.db_size
   region     = var.region
   node_count = 1
+}
+
+resource "digitalocean_database_firewall" "trusted_web_sources" {
+  cluster_id = digitalocean_database_cluster.db.id
+
+  dynamic "rule" {
+    for_each = digitalocean_droplet.web
+    content {
+      type  = "droplet"
+      value = rule.value["id"]
+    }
+  }
 }

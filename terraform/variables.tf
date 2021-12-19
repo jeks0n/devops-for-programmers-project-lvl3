@@ -7,7 +7,7 @@ variable "do_token" {
 
 variable "app_port" {
   type    = number
-  default = 8000
+  default = 8080
 }
 
 variable "ssh_name" {
@@ -47,5 +47,5 @@ variable "db_size" {
 
 variable "domain" {
   type    = string
-  default = "project-3.hexlet-project.xyz"
+  default = "contract-management.club"
 }

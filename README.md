@@ -3,7 +3,7 @@
 
 Goal: Learn to write infrastructure as code using Digital ocean as an example
 
-App: http://project-3.hexlet-project.xyz
+App: https://contract-management.club/
 
 #### Terraform commands (Infrastructure)
 ```bash
