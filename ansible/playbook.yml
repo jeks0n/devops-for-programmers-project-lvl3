@@ -1,21 +1,17 @@
 ---
 
-- name: Update cache
-  hosts: all
-  tasks:
-    - name: Update cache
-      apt:
-        update_cache: yes
-
 - name: Install docker
   hosts: all
   remote_user: root
-  vars:
-    pip_install_packages:
-      - name: docker
-  roles:
-    - geerlingguy.pip
-    - geerlingguy.docker
+  tasks:
+    - name: Install packages
+      apt:
+        name: python3-pip
+        update_cache: yes
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
 
 - name: Prepare webservers
   hosts: all
