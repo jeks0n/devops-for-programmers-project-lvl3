@@ -73,3 +73,24 @@ resource "digitalocean_database_firewall" "trusted_web_sources" {
     }
   }
 }
+
+resource "datadog_monitor" "app_monitor" {
+  name               = "http check {{ host.name }}"
+  type               = "service check"
+  message            = " @jekson87@me.com"
+
+  query = "\"http.can_connect\".over(\"*\").by(\"host\",\"instance\",\"url\").last(2).count_by_status()"
+
+  monitor_thresholds {
+    warning  = 1
+    ok       = 1
+    critical = 1
+  }
+
+  notify_no_data    = false
+  renotify_interval = 0
+  notify_audit      = false
+  timeout_h         = 0
+  no_data_timeframe = 2
+  new_group_delay   = 60
+}

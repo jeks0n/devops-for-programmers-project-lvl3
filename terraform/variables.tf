@@ -5,6 +5,18 @@ variable "do_token" {
   sensitive   = true
 }
 
+variable "datadog_api_key" {
+  description = "DataDog API key"
+  type        = string
+  sensitive   = true
+}
+
+variable "datadog_app_key" {
+  description = "DataDog API key"
+  type        = string
+  sensitive   = true
+}
+
 variable "app_port" {
   type    = number
   default = 8080

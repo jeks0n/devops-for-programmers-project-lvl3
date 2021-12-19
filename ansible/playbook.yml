@@ -49,7 +49,7 @@
         name: redmine-app
         image: redmine:4.2.3
         published_ports:
-          - "8080:3000"
+          - "{{ app_port }}:3000"
         restart_policy: always
         restart: yes
         container_default_behavior: no_defaults
@@ -60,3 +60,11 @@
           REDMINE_DB_PORT: "{{ db_port }}"
           REDMINE_DB_USERNAME: "{{ db_username }}"
           REDMINE_DB_PASSWORD: "{{ db_password }}"
+
+- name: Setup monitoring
+  tags: monitoring
+  hosts: all
+  gather_facts: yes
+  remote_user: root
+  roles:
+    - name: datadog.datadog
