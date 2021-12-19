@@ -3,18 +3,12 @@
 - name: Install docker
   hosts: all
   remote_user: root
-  tasks:
-    - name: Install packages
-      apt:
-        name: python3-pip
-        update_cache: yes
-
-    - name: Install Docker Module for Python
-      pip:
-        name: docker
+  roles:
+    - name: geerlingguy.docker
+    - name: geerlingguy.pip
 
 - name: Prepare webservers
-  hosts: all
+  hosts: webservers
   remote_user: root
   tasks:
     - name: Add the user 'deploy'
