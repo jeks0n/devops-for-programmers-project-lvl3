@@ -23,8 +23,8 @@ variable "app_port" {
 }
 
 variable "ssh_name" {
-  type        = string
-  default     = "Mac Pro"
+  type    = string
+  default = "Mac Pro"
 }
 
 variable "region" {

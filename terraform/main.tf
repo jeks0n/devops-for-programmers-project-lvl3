@@ -75,9 +75,9 @@ resource "digitalocean_database_firewall" "trusted_web_sources" {
 }
 
 resource "datadog_monitor" "app_monitor" {
-  name               = "http check {{ host.name }}"
-  type               = "service check"
-  message            = " @jekson87@me.com"
+  name    = "http check {{ host.name }}"
+  type    = "service check"
+  message = " @jekson87@me.com"
 
   query = "\"http.can_connect\".over(\"*\").by(\"host\",\"instance\",\"url\").last(2).count_by_status()"
 
