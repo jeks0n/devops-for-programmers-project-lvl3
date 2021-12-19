@@ -1,6 +1,9 @@
 init:
 	terraform -chdir=terraform init
 
+fmt:
+ 	terraform fmt -check -diff terraform
+
 plan:
 	terraform -chdir=terraform plan
 
