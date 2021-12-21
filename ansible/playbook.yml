@@ -60,6 +60,5 @@
   tags: monitoring
   hosts: all
   gather_facts: yes
-  remote_user: root
   roles:
     - name: datadog.datadog
